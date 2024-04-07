@@ -1,6 +1,7 @@
 package test;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,10 +15,11 @@ public class TestDemo {
         BillCalculate billCalculate = new BillCalculate();
         //创建订单
         List<BillDetails> billDetailsList= new ArrayList<>();
-        billDetailsList.add(new BillDetails(1, "apple", "5.6"));
-        billDetailsList.add(new BillDetails(2, "strawberry", "8.4"));
+        billDetailsList.add(new BillDetails(1, "apple", "1.54"));
+        billDetailsList.add(new BillDetails(2, "strawberry", "2.66"));
         BigDecimal priceSum = billCalculate.fruitsPriceCalculateSum(billDetailsList);
-        System.out.println(priceSum);
+        Assert.isTrue(priceSum.compareTo(new BigDecimal("46.9")) == 0,
+                "第一题金额计算测试失败"+ priceSum.toString());
     }
 
     //第二题
@@ -30,7 +32,8 @@ public class TestDemo {
         billDetailsList.add(new BillDetails(2, "strawberry", "0.5"));
         billDetailsList.add(new BillDetails(3, "mango", "0.80025"));
         BigDecimal priceSum = billCalculate.fruitsPriceCalculateSum(billDetailsList);
-        System.out.println(priceSum);
+        Assert.isTrue(priceSum.compareTo(new BigDecimal("24.905")) == 0,
+                "第二题金额计算测试失败" + priceSum.toString());
     }
 
     //第三题
@@ -48,7 +51,8 @@ public class TestDemo {
         billDetailsList.add(new BillDetails(2, "strawberry", "10"));
         billDetailsList.add(new BillDetails(3, "mango", "4.2"));
         BigDecimal priceSum = billCalculate.fruitsPriceCalculateSum(billDetailsList);
-        System.out.println(priceSum);
+        Assert.isTrue(priceSum.compareTo(new BigDecimal("228")) == 0,
+                "第三题折扣金额计算测试失败"+ priceSum.toString());
     }
 
     //第四题
@@ -68,14 +72,16 @@ public class TestDemo {
         billDetailsList.add(new BillDetails(2, "strawberry", "1.5375"));
         billDetailsList.add(new BillDetails(3, "mango", "4"));
         BigDecimal priceSum = billCalculate.fruitsPriceCalculateSum(billDetailsList);
-        System.out.println(priceSum);
+        Assert.isTrue(priceSum.compareTo(new BigDecimal("99.99")) == 0,
+                "第4题满减金额边界值测试99.99失败"+ priceSum.toString());
         //创建订单 100.01
         List<BillDetails> billDetailsList101= new ArrayList<>();
         billDetailsList101.add(new BillDetails(1, "apple", "0.5"));
         billDetailsList101.add(new BillDetails(2, "strawberry", "1.5375"));
         billDetailsList101.add(new BillDetails(3, "mango", "4.001"));
         priceSum = billCalculate.fruitsPriceCalculateSum(billDetailsList101);
-        System.out.println(priceSum);
+        Assert.isTrue(priceSum.compareTo(new BigDecimal("90.01")) == 0,
+                "第4题满减金额边界值测试100.01失败"+ priceSum.toString());
     }
 
 }
